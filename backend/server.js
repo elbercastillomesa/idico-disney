@@ -1,7 +1,16 @@
+require('dotenv').config()
 const express = require('express')
 
 // Express App declaration.
 const app = express()
+
+// Test logger middleware
+app.use(
+    (req, res, next) => {
+        console.log(req.path, req.method)
+        next()
+    }
+)
 
 // Route handler
 app.get(
@@ -15,7 +24,7 @@ app.get(
 
 // Request listener
 app.listen(
-    4000,
+    process.env.PORT,
     () => {
         console.log('Test listening on port 4000')
     }
