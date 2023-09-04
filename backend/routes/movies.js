@@ -1,20 +1,6 @@
 const express = require('express')
-const {connection} = require("../config.db")
-
 const router = express.Router()
-
-// Testing DB Connection
-const getMovies = (request, response) => {
-    connection.query("SELECT * FROM MoviesOrSeries", 
-    (error, results) => {
-        if(error)
-            throw error;
-        response.status(200).json(results);
-    });
-};
-
-router.route("/movies")
-.get(getMovies);
+const MoviesOrSeries = require('../models/moviesorseries.model');
 
 // GET All
 router.get(
@@ -39,10 +25,18 @@ router.get(
 // POST single
 router.post(
     '/',
-    (req, res) => {
-        res.json({
-            mssg: 'POST new data'
-        })
+    async (req, res) => {
+        const {image, title, creationDate, rating} = req.body
+
+        try {
+            const movie = MoviesOrSeries.create({image, title, creationDate, rating})
+            res.status(200).json(movie)
+
+        } catch (error) {
+            res.status(400).json(
+                {error : error.message}
+            )
+        }
     }
 )
 
