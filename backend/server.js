@@ -1,7 +1,8 @@
 require('dotenv').config()
 
 const express = require('express')
-const workoutRouters = require('./routes/movies')
+const moviesOrSeriesRouters = require('./routes/movies')
+const characterRouters = require('./routes/characters')
 
 // Express App declaration.
 const app = express()
@@ -18,7 +19,8 @@ app.use(
 )
 
 // Route handler
-app.use('/api/movies',  workoutRouters)
+app.use('/movies',  moviesOrSeriesRouters)
+app.use('/characters',  characterRouters)
 
 // Request listener
 app.listen(

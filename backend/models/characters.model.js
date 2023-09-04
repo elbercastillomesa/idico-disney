@@ -3,20 +3,20 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config.db');
 
 const Characters = sequelize.define('Characters', {
-  Image: {
+  image: {
     type: DataTypes.STRING,
   },
-  Name: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  Age: {
+  age: {
     type: DataTypes.INTEGER,
   },
-  Weight: {
+  weight: {
     type: DataTypes.DECIMAL(5, 2),
   },
-  History: {
+  history: {
     type: DataTypes.TEXT,
   },
 });

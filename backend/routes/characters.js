@@ -2,41 +2,41 @@ const express = require('express')
 const router = express.Router()
 
 const {
-    getAllMovieOrSeries,
-    getMovieOrSeries,
-    createMovieOrSeries,
-    deleteMovieOrSeries,
-    updateMovieOrSeries
-} = require('../controllers/moviesorseries.controller')
+  getAllCharacters,
+  getCharacter,
+  createCharacter,
+  deleteCharacter,
+  updateCharacters
+} = require('../controllers/character.controller')
 
 // GET All
 router.get(
     '/',
-    getAllMovieOrSeries
+    getAllCharacters
 )
 
 // GET single
 router.get(
     '/:id',
-    getMovieOrSeries
+    getCharacter
 )
 
 // POST single
 router.post(
     '/',
-    createMovieOrSeries
+    createCharacter
 )
 
 // DELETE single
 router.delete(
     '/:id',
-    deleteMovieOrSeries
+    deleteCharacter
 )
 
 // UPDATE single
 router.patch(
     '/:id',
-    updateMovieOrSeries
+    updateCharacters
 )
 
 module.exports = router
