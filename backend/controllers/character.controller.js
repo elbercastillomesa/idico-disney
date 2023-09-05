@@ -1,5 +1,5 @@
 const Character = require('../models/characters.model');
-//const CharacterMoviesOrSeries = require('../models/charactermoviesorseries.model');
+const CharacterMoviesOrSeries = require('../models/charactermoviesorseries.model');
 
 // GET All
 const getAllCharacters = async (req, res) => {

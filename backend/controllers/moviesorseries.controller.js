@@ -1,6 +1,6 @@
 const MoviesOrSeries = require('../models/moviesorseries.model');
-//const Genre = require('../models/genre.model');
-//const GenreMoviesOrSeries = require('../models/genremoviesorseries.model');
+const Genre = require('../models/genre.model');
+const GenreMoviesOrSeries = require('../models/genremoviesorseries.model');
 
 // GET All
 const getAllMovieOrSeries = async (req, res) => {
