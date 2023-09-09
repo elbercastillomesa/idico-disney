@@ -25,7 +25,7 @@ const getMovieOrSeries = async (req, res) => {
 
     if (!movies) {
         return  res.status(404).send(
-            {error : "Movie or Series not found."}
+            {error : "Movie or Series ID not found."}
         )
     }
 
@@ -62,7 +62,7 @@ const deleteMovieOrSeries = async (req, res) => {
 
     if (movies == false) {
         return  res.status(400).send(
-            {error : "Movie or Series not found."}
+            {error : "Movie or Series ID not found."}
         )
     }
 
@@ -80,7 +80,7 @@ const updateMovieOrSeries = async (req, res) => {
 
     if (movies == false) {
         return  res.status(400).send(
-            {error : "Movie or Series not found."}
+            {error : "Movie or Series ID not found."}
         )
     }
 

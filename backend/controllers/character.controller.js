@@ -24,7 +24,7 @@ const getCharacter = async (req, res) => {
 
     if (!characters) {
         return  res.status(404).send(
-            {error : "The Character was not found."}
+            {error : "The Character ID was not found."}
         )
     }
 
@@ -59,7 +59,7 @@ const deleteCharacter = async (req, res) => {
 
     if (character == false) {
         return  res.status(400).send(
-            {error : "Movie or Series not found."}
+            {error : "The Character ID was not found."}
         )
     }
 
@@ -77,7 +77,7 @@ const updateCharacters = async (req, res) => {
 
     if (character == false) {
         return  res.status(400).send(
-            {error : "Movie or Series not found."}
+            {error : "The Character ID was not found."}
         )
     }
 

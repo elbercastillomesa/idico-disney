@@ -60,7 +60,7 @@ const MoviesForm = () => {
 
             <label>Premiere Date</label>
             <input 
-                type="text"
+                type="date"
                 onChange={ (e) => setCreationDate(e.target.value) }
                 value={creationDate}
             />
