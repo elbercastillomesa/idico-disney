@@ -11,7 +11,7 @@ const Movie = () => {
     useEffect( 
         () => {
             const fetchMovies = async () => {
-                const response = await fetch('/movies')     
+                const response = await fetch('http://localhost:4000/movies')     
                 const json = await response.json()
 
                 if (response.ok) {

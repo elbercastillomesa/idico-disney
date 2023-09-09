@@ -14,7 +14,7 @@ const MoviesForm = () => {
         const movie = {image, title, creationDate, rating}
 
         const response = await fetch(
-            '/movies',
+            'http://localhost:4000/movies',
             {
                 method: 'POST',
                 body: JSON.stringify(movie),                

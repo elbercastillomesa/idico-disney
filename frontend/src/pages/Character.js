@@ -11,7 +11,7 @@ const Character = () => {
     useEffect( 
         () => {
             const fetchCharacters = async () => {
-                const response = await fetch('/characters')
+                const response = await fetch('http://localhost:4000/characters')
                 const json = await response.json()
 
                 if (response.ok) {

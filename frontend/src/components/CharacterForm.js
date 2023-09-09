@@ -15,7 +15,7 @@ const CharacterForm = () => {
         const character = {image, name, age, weight, history}
 
         const response = await fetch(
-            '/characters',
+            'http://localhost:4000/characters',
             {
                 method: 'POST',
                 body: JSON.stringify(character),                
