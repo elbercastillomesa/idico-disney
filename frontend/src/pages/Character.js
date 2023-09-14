@@ -32,10 +32,12 @@ const Character = () => {
     }
 
     return (        
-        <section className="character">                
-            {characterIterator()}
+        <section className="character-tab">
+            <div className="character-list">
+                {characterIterator()}
+            </div>
             <CharacterForm />
-        </section>
+        </section>                
     )
 }
 

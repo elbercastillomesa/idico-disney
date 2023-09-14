@@ -32,11 +32,15 @@ header a {
   margin: 0 auto;
 }
 
-/* homepage */
-.home {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 5%;
+/* sections */
+section > .movies-tab,
+section > .character-tab {
+  display: flex;  
+  gap: 3%;
+}
+.movies-list,
+.character-list {
+  flex: 70%;
 }
 .character-details,
 .movie-details {
@@ -72,6 +76,10 @@ header a {
 }
 
 /* Form Styles */
+form.create {
+  flex: 25%;
+  padding: 0 20px;
+}
 label, input, textarea {
   display: block;
 }
@@ -94,6 +102,7 @@ form button {
   cursor: pointer;
 }
 div.error {
+  width: 90%;  
   padding: 10px;
   background: #ffefef;
   border: 1px solid var(--error);

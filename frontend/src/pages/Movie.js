@@ -32,8 +32,10 @@ const Movie = () => {
     }
 
     return (        
-        <section className="movies">                
-            {movieIterator()}                
+        <section className="movies-tab">
+            <div className="movies-list">
+                {movieIterator()}
+            </div>            
             <MoviesForm />
         </section>
     )
