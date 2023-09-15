@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
-
-// Components
+import { useEffect } from 'react'
+import { useCharacterContext } from '../hooks/useCharacterContext' 
 import CharacterArticle from '../components/CharacterArticle'
 import CharacterForm from '../components/CharacterForm'
 
 const Character = () => {
 
-    const [ characters, setCharacters ] = useState(null)
+    const {characters, dispatch} = useCharacterContext()
 
     useEffect( 
         () => {
@@ -15,12 +14,15 @@ const Character = () => {
                 const json = await response.json()
 
                 if (response.ok) {
-                    setCharacters(json)
+                    dispatch({
+                        type: 'GET_CHARACTERS',
+                        payload: json
+                    })
                 }
             }
             fetchCharacters()
         }, 
-        []
+        [dispatch]
     )
 
     const characterIterator = () => {
