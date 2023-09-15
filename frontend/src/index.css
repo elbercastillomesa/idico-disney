@@ -11,8 +11,12 @@ body {
   margin: 0;
   font-family: "Poppins";
 }
+a {
+  text-decoration: none;
+}
 header {
   background: #fff;
+  color: #333;
 }
 header .container {
   max-width: 1400px;
@@ -23,8 +27,7 @@ header .container {
   justify-content: space-between;
 }
 header a {
-  color: #333;
-  text-decoration: none;
+  color: #333;  
 }
 .pages{
   max-width: 1400px;
@@ -44,6 +47,7 @@ section > .character-tab {
 }
 .character-details,
 .movie-details {
+  display: flex;
   background: #fff;
   border-radius: 4px;
   margin: 20px auto;
@@ -53,6 +57,7 @@ section > .character-tab {
 }
 .character-details h4,
 .movie-details h4 {
+  text-transform: capitalize;
   margin: 0 0 10px 0;
   font-size: 1.2em;
   color: var(--primary);
@@ -64,15 +69,30 @@ section > .character-tab {
   color: #555;
 }
 .character-details span,
-.movie-details span {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.character-details button,
+.movie-details span,
+.movie-details button {    
   cursor: pointer;
-  background: #f1f1f1;
-  padding: 6px;
-  border-radius: 50%;
-  color: #333;
+  text-align: center;
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;  
+}
+span.delete {
+  background: #e7195a9e;
+}
+.details {
+  flex: 80%
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.actions button {
+  background: deepskyblue;
 }
 
 /* Form Styles */
@@ -100,6 +120,10 @@ form button {
   font-family: "Poppins";
   border-radius: 4px;
   cursor: pointer;
+}
+form .discard {
+  background: gainsboro;
+  margin-left: 20px;
 }
 div.error {
   width: 90%;  

@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import Navbar from './components/Navbar';
 import Movie from './pages/Movie'
 import Character from './pages/Character'
+import { MoviesContextProvider } from './context/MoviesContext';
+import { CharacterContextProvider } from './context/CharacterContext';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,10 +69,14 @@ function App() {
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-              <Movie />
+              <MoviesContextProvider>
+                <Movie />
+              </MoviesContextProvider>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <Character />
+              <CharacterContextProvider>
+                <Character />
+              </CharacterContextProvider>              
             </CustomTabPanel>
           </Box>
 

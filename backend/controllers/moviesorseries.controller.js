@@ -39,8 +39,6 @@ const createMovieOrSeries = async (req, res) => {
     try {
         const movie = await MoviesOrSeries.create({image, title, creationDate, rating})
 
-        console.log(movie)
-
         res.status(200).send(movie)
 
     } catch (error) {

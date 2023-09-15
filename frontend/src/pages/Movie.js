@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
-
-// Components
+import { useEffect } from 'react'
+import { useMoviesContext } from '../hooks/useMoviesContext'
 import MoviesArticle from '../components/MoviesArticle'
 import MoviesForm from '../components/MoviesForm'
 
 const Movie = () => {
 
-    const [ movies, setMovies ] = useState(null)
+    const {movies, dispatch} = useMoviesContext()
 
     useEffect( 
         () => {
@@ -15,12 +14,15 @@ const Movie = () => {
                 const json = await response.json()
 
                 if (response.ok) {
-                    setMovies(json)
+                    dispatch({
+                        type: 'GET_MOVIES', 
+                        payload: json
+                    })
                 }
             }
             fetchMovies()
         }, 
-        []
+        [dispatch]
     )
 
     const movieIterator = () => {

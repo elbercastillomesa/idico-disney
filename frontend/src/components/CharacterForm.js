@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useCharacterContext } from "../hooks/useCharacterContext"
 
 const CharacterForm = () => {
 
+    const { dispatch } = useCharacterContext()
     const [image, setImage] = useState('')
     const [name, setName] = useState('')
     const [age, setAge] = useState('')
@@ -38,6 +40,10 @@ const CharacterForm = () => {
                     setWeight('')
                     setHistory('')
                     setError(null)
+                    dispatch({
+                        type: 'CREATE_CHARACTER',
+                        payload: data
+                    })
                 }
             })
             .catch(error => {

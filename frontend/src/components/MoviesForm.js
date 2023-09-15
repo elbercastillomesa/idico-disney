@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useMoviesContext } from '../hooks/useMoviesContext'
 
 const MoviesForm = () => {
 
+    const { dispatch } = useMoviesContext()
     const [image, setImage] = useState('')
     const [title, setTitle] = useState('')
     const [creationDate, setCreationDate] = useState('')
@@ -36,6 +38,10 @@ const MoviesForm = () => {
                     setCreationDate('')
                     setRating('')
                     setError(null)
+                    dispatch({
+                        type: 'CREATE_MOVIE', 
+                        payload: data
+                    })
                 }
             })
             .catch(error => {
