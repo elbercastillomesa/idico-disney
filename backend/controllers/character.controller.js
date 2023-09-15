@@ -36,6 +36,20 @@ const createCharacter = async (req, res) => {
 
     const {image, name, age, weight, history} = req.body
 
+    let emptyFields = []
+
+    if(!image) { emptyFields.push('image') }
+    if(!name) { emptyFields.push('name') }
+    if(!age) { emptyFields.push('age') }
+    if(!weight) { emptyFields.push('weight') }
+    if(!history) { emptyFields.push('history') }
+    if(emptyFields.length > 0) { 
+        return res.status(400).send({ 
+            error: 'Please fill all fields.',
+            emptyFields
+        })
+    }
+
     try {
         const character = await Character.create({image, name, age, weight, history})
         res.status(200).send(character)
