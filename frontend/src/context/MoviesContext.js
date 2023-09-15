@@ -17,6 +17,10 @@ export const moviesReducer = (state, action) => {
             return {
                 movies: state.movies.filter( (movie) => movie.id !== action.payload.id )
             }
+        case 'UPDATE_MOVIE':            
+            return {
+                movies: state.movies.map(movie => movie.id === action.payload.id ? action.payload : movie)
+            }
         default:
             return state
     }

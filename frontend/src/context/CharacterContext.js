@@ -17,6 +17,10 @@ export const characterReducer = (state, action) => {
             return {
                 characters: state.characters.filter( (character) => character.id !== action.payload.id )
             }
+        case 'UPDATE_CHARACTER':            
+            return {
+                characters: state.characters.map(character => character.id === action.payload.id ? action.payload : character)
+            }
         default:
             return state
     }
