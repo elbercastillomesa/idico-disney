@@ -36,6 +36,19 @@ const getMovieOrSeries = async (req, res) => {
 const createMovieOrSeries = async (req, res) => {
     const {image, title, creationDate, rating} = req.body
 
+    let emptyFields = []
+
+    if(!image) { emptyFields.push('image') }
+    if(!title) { emptyFields.push('title') }
+    if(!creationDate) { emptyFields.push('creationDate') }
+    if(!rating) { emptyFields.push('rating') }
+    if(emptyFields.length > 0) { 
+        return res.status(400).send({ 
+            error: 'Please fill all fields.',
+            emptyFields
+        })
+    }
+
     try {
         const movie = await MoviesOrSeries.create({image, title, creationDate, rating})
 

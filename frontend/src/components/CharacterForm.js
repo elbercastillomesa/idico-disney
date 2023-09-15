@@ -10,6 +10,7 @@ const CharacterForm = () => {
     const [weight, setWeight] = useState('')
     const [history, setHistory] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState( [] )
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -29,7 +30,7 @@ const CharacterForm = () => {
 
                 if (!response.ok) {
                     // get error message from body or default to response status
-                    const error = (data && data.error) || response.status;
+                    const error = data || response.status;
                     return Promise.reject(error);
                 }
 
@@ -40,6 +41,7 @@ const CharacterForm = () => {
                     setWeight('')
                     setHistory('')
                     setError(null)
+                    setEmptyFields( [] )
                     dispatch({
                         type: 'CREATE_CHARACTER',
                         payload: data
@@ -47,8 +49,8 @@ const CharacterForm = () => {
                 }
             })
             .catch(error => {
-                setError(error)
-                console.error('There was an error!', error);
+                setError(error.error)
+                setEmptyFields(error.emptyFields)
             });
     }
 
@@ -64,6 +66,7 @@ const CharacterForm = () => {
                 type="text"
                 onChange={ (e) => setName(e.target.value) }
                 value={name}
+                className={emptyFields.includes('name') ? 'error' : '' }
             />
 
             <label>Thumbnail</label>
@@ -71,6 +74,7 @@ const CharacterForm = () => {
                 type="text"
                 onChange={ (e) => setImage(e.target.value) }
                 value={image}
+                className={emptyFields.includes('image') ? 'error' : '' }
             />
 
             <label>Age</label>
@@ -81,6 +85,7 @@ const CharacterForm = () => {
                 step="1"
                 onChange={ (e) => setAge(e.target.value) }
                 value={age}
+                className={emptyFields.includes('age') ? 'error' : '' }
             />
 
             <label>Weight (Kg)</label>
@@ -91,6 +96,7 @@ const CharacterForm = () => {
                 step="1"
                 onChange={ (e) => setWeight(e.target.value) }
                 value={weight}
+                className={emptyFields.includes('weight') ? 'error' : '' }
             />
 
             <label>History</label>
@@ -101,6 +107,7 @@ const CharacterForm = () => {
                 type="textarea"
                 onChange={ (e) => setHistory(e.target.value) }
                 value={history}
+                className={emptyFields.includes('history') ? 'error' : '' }
             >Add the character history...</textarea>
 
             <button>Add New Character</button>

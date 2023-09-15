@@ -9,6 +9,7 @@ const MoviesForm = () => {
     const [creationDate, setCreationDate] = useState('')
     const [rating, setRating] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState( [] )
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -28,7 +29,7 @@ const MoviesForm = () => {
 
                 if (!response.ok) {
                     // get error message from body or default to response status
-                    const error = (data && data.error) || response.status;
+                    const error = data || response.status;
                     return Promise.reject(error);
                 }
 
@@ -38,6 +39,7 @@ const MoviesForm = () => {
                     setCreationDate('')
                     setRating('')
                     setError(null)
+                    setEmptyFields( [] )
                     dispatch({
                         type: 'CREATE_MOVIE', 
                         payload: data
@@ -45,8 +47,8 @@ const MoviesForm = () => {
                 }
             })
             .catch(error => {
-                setError(error)
-                console.error('There was an error!', error);
+                setError(error.error)
+                setEmptyFields(error.emptyFields)
             });
     }
 
@@ -62,6 +64,7 @@ const MoviesForm = () => {
                 type="text"
                 onChange={ (e) => setTitle(e.target.value) }
                 value={title}
+                className={emptyFields.includes('title') ? 'error' : '' }
             />
 
             <label>Thumbnail</label>
@@ -69,6 +72,7 @@ const MoviesForm = () => {
                 type="text"
                 onChange={ (e) => setImage(e.target.value) }
                 value={image}
+                className={emptyFields.includes('image') ? 'error' : '' }
             />
 
             <label>Premiere Date</label>
@@ -76,6 +80,7 @@ const MoviesForm = () => {
                 type="date"
                 onChange={ (e) => setCreationDate(e.target.value) }
                 value={creationDate}
+                className={emptyFields.includes('creationDate') ? 'error' : '' }
             />
 
             <label>Rating</label>
@@ -86,6 +91,7 @@ const MoviesForm = () => {
                 step="1"
                 onChange={ (e) => setRating(e.target.value) }
                 value={rating}
+                className={emptyFields.includes('rating') ? 'error' : '' }
             />
 
             <button>Add Movie or Serie</button>
