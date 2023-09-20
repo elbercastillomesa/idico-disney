@@ -6,7 +6,8 @@ const sequelize = new Sequelize(
  process.env.DBUSER,
  process.env.DBPASS,
   {
-    host: process.env.DBHOST,
+    host: process.env.DBHOST || 'localhost',
+    port: process.env.DBPORT,
     dialect: 'mysql',
     sync: true,
   }
