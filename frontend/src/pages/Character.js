@@ -2,15 +2,24 @@ import { useEffect } from 'react'
 import { useCharacterContext } from '../hooks/useCharacterContext' 
 import CharacterArticle from '../components/CharacterArticle'
 import CharacterForm from '../components/CharacterForm'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Character = () => {
 
     const {characters, dispatch} = useCharacterContext()
+    const { user } = useAuthContext()
 
     useEffect( 
         () => {
             const fetchCharacters = async () => {
-                const response = await fetch('http://localhost:4000/characters')
+                const response = await fetch(
+                    'http://localhost:4000/characters',
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${user.token}`
+                        }
+                    }
+                )
                 const json = await response.json()
 
                 if (response.ok) {
@@ -20,9 +29,12 @@ const Character = () => {
                     })
                 }
             }
-            fetchCharacters()
+            
+            if (user) {
+                fetchCharacters()
+            }
         }, 
-        [dispatch]
+        [dispatch, user]
     )
 
     const characterIterator = () => {

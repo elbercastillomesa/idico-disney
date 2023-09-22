@@ -9,6 +9,11 @@ const {
   updateCharacters
 } = require('../controllers/character.controller')
 
+const requireAuth = require('../middleware/requireAuth')
+
+// Require Auth for all characters routes
+router.use(requireAuth)
+
 // GET All
 router.get(
     '/',

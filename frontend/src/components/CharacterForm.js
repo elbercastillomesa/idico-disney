@@ -1,9 +1,12 @@
 import { useState } from "react"
 import { useCharacterContext } from "../hooks/useCharacterContext"
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const CharacterForm = () => {
 
     const { dispatch } = useCharacterContext()
+    const { user } = useAuthContext()
+
     const [image, setImage] = useState('')
     const [name, setName] = useState('')
     const [age, setAge] = useState('')
@@ -15,12 +18,20 @@ const CharacterForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        if(!user) {
+            setError('The user should be logged in')
+            return
+        }
+
         const character = {image, name, age, weight, history}
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(character),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }, 
         };
 
         fetch('http://localhost:4000/characters', requestOptions)
