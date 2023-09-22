@@ -19,6 +19,11 @@ const Characters = sequelize.define('Characters', {
   history: {
     type: DataTypes.TEXT,
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
 });
 
 Characters.sync().then(
