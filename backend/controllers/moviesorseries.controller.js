@@ -4,10 +4,13 @@ const GenreMoviesOrSeries = require('../models/genremoviesorseries.model');
 
 // GET All
 const getAllMovieOrSeries = async (req, res) => {
+
+    const user_id = req.user.id
     
     const movies = await MoviesOrSeries.findAll({
         where: {
-            ...req.query
+            ...req.query,
+            user_id
         },
         order: [['createdAt', 'DESC']] 
       });
@@ -50,7 +53,8 @@ const createMovieOrSeries = async (req, res) => {
     }
 
     try {
-        const movie = await MoviesOrSeries.create({image, title, creationDate, rating})
+        const user_id = req.user.id
+        const movie = await MoviesOrSeries.create({image, title, creationDate, rating, user_id})
 
         res.status(200).send(movie)
 

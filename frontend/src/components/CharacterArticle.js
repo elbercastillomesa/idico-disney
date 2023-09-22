@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useCharacterContext } from '../hooks/useCharacterContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const CharacterArticle = ({ character }) => {
 
     const { dispatch } = useCharacterContext()
+    const { user } = useAuthContext()
 
     const [editing, setEditing] = useState(false);
     let [formData, setFormData] = useState(character);
@@ -22,14 +24,23 @@ const CharacterArticle = ({ character }) => {
         setFormData({ ...formData, [name]: value });
     };
 
+    let requestOptions = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+    };
+
     const handleUpdate = async (e) => {
         e.preventDefault()
 
-        const requestOptions = {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
-        };
+        if (!user) {
+            setError('The user should be logged in')
+            return
+        }
+
+        requestOptions.body = JSON.stringify(formData)
+        requestOptions.method = 'PATCH'
 
         fetch('http://localhost:4000/characters/' + character.id, requestOptions)
             .then(async response => {
@@ -58,7 +69,14 @@ const CharacterArticle = ({ character }) => {
 
     const handleDelete = async () => {
 
-        fetch('http://localhost:4000/characters/' + character.id, { method: 'DELETE' })
+        if (!user) {
+            setError('The user should be logged in')
+            return
+        }
+
+        requestOptions.method = 'DELETE'
+
+        fetch('http://localhost:4000/characters/' + character.id, requestOptions)
             .then(async response => {
                 const isJson = response.headers.get('content-type')?.includes('application/json');
                 const data = isJson && await response.json();

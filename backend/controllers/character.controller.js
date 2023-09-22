@@ -3,10 +3,13 @@ const CharacterMoviesOrSeries = require('../models/charactermoviesorseries.model
 
 // GET All
 const getAllCharacters = async (req, res) => {
+
+    const user_id = req.user.id
     
     const characters = await Character.findAll({
         where: {
-            ...req.query
+            ...req.query,
+            user_id
         },
         order: [['createdAt', 'DESC']] 
       });
@@ -51,7 +54,8 @@ const createCharacter = async (req, res) => {
     }
 
     try {
-        const character = await Character.create({image, name, age, weight, history})
+        const user_id = req.user.id
+        const character = await Character.create({image, name, age, weight, history, user_id})
         res.status(200).send(character)
 
     } catch (error) {

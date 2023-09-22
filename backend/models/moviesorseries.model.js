@@ -16,6 +16,11 @@ const MoviesOrSeries = sequelize.define('MoviesOrSeries', {
   rating: {
     type: DataTypes.DECIMAL(3, 2),
   },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
 });
 
 MoviesOrSeries.sync().then(

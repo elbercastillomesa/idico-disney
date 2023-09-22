@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const cors = require("cors")
+const userRoutes = require('./routes/user')
 const moviesOrSeriesRouters = require('./routes/movies')
 const characterRouters = require('./routes/characters')
 
@@ -37,6 +38,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 // Route handler
+app.use('/user', userRoutes)
 app.use('/movies',  moviesOrSeriesRouters)
 app.use('/characters',  characterRouters)
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useMoviesContext } from '../hooks/useMoviesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Movies = ({ movie }) => {
 
   const { dispatch } = useMoviesContext()
+  const { user } = useAuthContext()
 
   const [editing, setEditing] = useState(false);
   let [formData, setFormData] = useState(movie);
@@ -20,24 +22,33 @@ const Movies = ({ movie }) => {
 
   const cancelEdit = () => {
     setEditing(false);
-};
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  let requestOptions = {    
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user.token}`
+    }
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault()
+
+    if (!user) {
+      setError('The user should be logged in')
+      return
+    }
 
     const creationDate = movieDate(formData.creationDate)
     formData = { ...formData, creationDate }
 
-    const requestOptions = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    };
+    requestOptions.body = JSON.stringify(formData)
+    requestOptions.method = 'PATCH'
 
     fetch('http://localhost:4000/movies/' + movie.id, requestOptions)
       .then(async response => {
@@ -65,8 +76,15 @@ const Movies = ({ movie }) => {
   };
 
   const handleDelete = async () => {
+    
+    if(!user) {
+      setError('The user should be logged in')
+      return
+    }
 
-    fetch('http://localhost:4000/movies/' + movie.id, { method: 'DELETE' })
+    requestOptions.method = 'DELETE'
+
+    fetch('http://localhost:4000/movies/' + movie.id, requestOptions)
       .then(async response => {
         const isJson = response.headers.get('content-type')?.includes('application/json');
         const data = isJson && await response.json();

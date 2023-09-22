@@ -1,25 +1,36 @@
 import { useState } from "react"
 import { useMoviesContext } from '../hooks/useMoviesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const MoviesForm = () => {
 
     const { dispatch } = useMoviesContext()
+    const { user } = useAuthContext()
+
     const [image, setImage] = useState('')
     const [title, setTitle] = useState('')
     const [creationDate, setCreationDate] = useState('')
     const [rating, setRating] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState( [] )
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if(!user) {
+            setError('The user should be logged in')
+            return
+        }
 
         const movie = { image, title, creationDate, rating }
 
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',            
             body: JSON.stringify(movie),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            },            
         };
 
         fetch('http://localhost:4000/movies', requestOptions)
