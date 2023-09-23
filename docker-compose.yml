@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: disney_universe
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      default:
+
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DB: disney_universe
+      MYSQL_PORT: 3306
+    ports:
+      - 4000:4000
+    healthcheck:
+      test: ["CMD", "curl", "http://backend:4000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5      
+    networks:
+      default:
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - 3000:3000    
+    networks:
+      default:
+
+volumes:
+  mysql_data:
+
+networks:
+  default:
