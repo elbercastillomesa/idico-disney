@@ -87,19 +87,41 @@ const deleteCharacter = async (req, res) => {
 // UPDATE single
 const updateCharacters = async (req, res) => {
     const { id } = req.params
+    const {image, name, age, weight, history} = req.body
+    const user_id = req.user.id
+    let emptyFields = []
 
-    const character = await Character.update(
-        {...req.body}, 
-        { where: { id: id } }
-    );
-
-    if (character == false) {
-        return  res.status(400).send(
-            {error : "The Character ID was not found."}
-        )
+    if(!image) { emptyFields.push('image') }
+    if(!name) { emptyFields.push('name') }
+    if(!age) { emptyFields.push('age') }
+    if(!weight) { emptyFields.push('weight') }
+    if(!history) { emptyFields.push('history') }
+    if(emptyFields.length > 0) { 
+        return res.status(400).send({ 
+            error: 'Please fill all fields.',
+            emptyFields
+        })
     }
 
-    res.status(200).send(character)
+    try {
+        const character = await Character.update(
+            {image, name, age, weight, history, user_id}, 
+            { where: { id: id } }
+        );
+
+        if (character == false) {
+            return  res.status(400).send(
+                {error : "The Character ID was not found."}
+            )
+        }
+    
+        res.status(200).send(character)
+        
+    } catch (error) {
+        res.status(400).send(
+            {error : error.message}
+        )        
+    }    
 }
 
 module.exports = {

@@ -87,19 +87,40 @@ const deleteMovieOrSeries = async (req, res) => {
 // UPDATE single
 const updateMovieOrSeries = async (req, res) => {
     const { id } = req.params
+    const {image, title, creationDate, rating} = req.body
+    const user_id = req.user.id
+    let emptyFields = []
 
-    const movies = await MoviesOrSeries.update(
-        {...req.body}, 
-        { where: { id: id } }
-    );
-
-    if (movies == false) {
-        return  res.status(400).send(
-            {error : "Movie or Series ID not found."}
-        )
+    if(!image) { emptyFields.push('image') }
+    if(!title) { emptyFields.push('title') }
+    if(!creationDate) { emptyFields.push('creationDate') }
+    if(!rating) { emptyFields.push('rating') }
+    if(emptyFields.length > 0) { 
+        return res.status(400).send({ 
+            error: 'Please fill all fields.',
+            emptyFields
+        })
     }
 
-    res.status(200).send(movies)
+    try {
+        const movies = await MoviesOrSeries.update(
+            {image, title, creationDate, rating, user_id}, 
+            { where: { id: id } }
+        );
+
+        if (movies == false) {
+            return  res.status(400).send(
+                {error : "Movie or Series ID not found."}
+            )
+        }
+
+        res.status(200).send(movies)
+
+    } catch (error) {
+        res.status(400).send(
+            {error : error.message}
+        )
+    }
 }
 
 module.exports = {
