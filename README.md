@@ -1,5 +1,24 @@
 # Technical Test - Development with Node.js and React
 
+## Initialize the APP
+
+- Install Docker and Docker CE/Docker Desktop if required.
+- Clone the repository and "cd" into the folder.
+- Run ```docker compose up ---build```
+- Check the docker console for the React App URL (most probably [localhost](http://localhost:3000/))
+- 🔥🖥️
+
+## Acknowledgments:
+
+Even though another developer was selected for this company position, I'm thrilled to find the motivation to create this small project. I want to thank the following experts for sharing their knowledge and help me to achieve this:
+
+- [Ninja Shaun](https://github.com/iamshaunjp) for sharing all of those marvelous tutorials as [MERN Stack Tutorial](https://www.youtube.com/watch?v=98BzS5Oz5E4&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE) and [MERN Auth Tutorial](https://www.youtube.com/watch?v=n9XX_zz3bi8&list=PL4cUxeGkcC9g8OhpOZxNdhXggFz2lOuCT&index=22).
+- [Jason](https://github.com/cornflourblue) for his amazing blog with very good practical examples for "HTTP Request Examples" on ReactJS.
+- [Juan](https://www.linkedin.com/in/zapatadev/) for his patience and guidance on the unstructured structure of Javascript.
+- [The Sequelize Organization](https://sequelize.org/) for their useful ORM their documentation was on point.
+
+------
+
 ## Objective:
 
 Develop an API that allows exploring the Disney universe, making it easy to know and modify the characters, and understand the movies in which they participated. Additionally, it should expose the information in a way that any frontend can consume it.
